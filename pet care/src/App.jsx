@@ -12,7 +12,8 @@ import { apiUrl } from './Config'
 
 
 function App() {
-    console.log(apiUrl)
+  console.log(apiUrl);
+  
   return (
       <Router>
           <Routes>
