@@ -1,15 +1,8 @@
 import axios from "axios";
-import { apiUrl } from "../Config";
-
-
+import { apiUrl } from "../../Config";
 
 
 export const login = async (email,password) =>{
-    
-  
-    
-    
-    
     
         try{
             const response = await axios.post(`${apiUrl}/auth/authenticate`,{

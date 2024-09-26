@@ -9,24 +9,34 @@ import {
 	HiOutlineCog
 } from 'react-icons/hi'
 
+import { MdAdminPanelSettings } from "react-icons/md";
+import { FaUsers } from "react-icons/fa";
+
+
+export const DASHBOARD_SIDEBAR_HEADER = {
+	key: 'heading',
+	label:'Admin',
+	icon: <MdAdminPanelSettings />
+}
+
 export const DASHBOARD_SIDEBAR_LINKS = [
 	{
 		key: 'dashboard',
 		label: 'Dashboard',
-		path: '/',
+		path: 's/dashboard',
 		icon: <HiOutlineViewGrid />
+	},
+	{
+		key: 'users',
+		label: 'Users',
+		path: '/users',
+		icon: <FaUsers />
 	},
 	{
 		key: 'products',
 		label: 'Products',
 		path: '/products',
 		icon: <HiOutlineCube />
-	},
-	{
-		key: 'orders',
-		label: 'Orders',
-		path: '/orders',
-		icon: <HiOutlineShoppingCart />
 	},
 	{
 		key: 'customers',

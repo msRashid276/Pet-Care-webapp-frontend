@@ -1,7 +1,6 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { login } from "../../services/Auth";
+import { login } from "../../services/api/Auth";
 
 const Login = () => {
 
@@ -47,37 +46,6 @@ const Login = () => {
     }catch(error){
       alert("Please enter correct email and password");
     }
-
-      // try {
-      //   const response = await axios.post('http://localhost:8080/auth/authenticate',{
-      //       email: input.email,
-      //       password: input.password
-      //   },{
-      //     headers: {
-      //       'Content-Type': 'application/json'
-      //     }
-      //   })
-
-      //   console.log(response.status);
-      //   const { role, token } = response.data;
-        
-
-      //   if (role === 'ADMIN') {
-      //     alert("successfully loggined into admin dashboard");
-      //     navigate('/admin/dashboard');
-      //   } else if (role === 'SHOP_OWNER') {
-      //     alert("successfully loggined into shop dashboard");
-      //     navigate('/shop/dashboard');
-      //   } else {
-      //     alert("Unknown role");
-      //   }
-       
-       
-           
-      // }catch(error){
-      //   console.log(error, "error");
-      //   alert("Please enter correct email and password");
-      // }
   };
 
   return (
