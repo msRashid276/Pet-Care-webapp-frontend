@@ -1,49 +1,54 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../services/api/Auth";
+import AuthContext from "../../providers/AuthProvider";
 
 const Login = () => {
-
   const navigate = useNavigate();
+  const { setAuth } = useContext(AuthContext);
 
-  const [input,setInput] = useState({
-    email:'',
-    password:''
-  })
+  const [input, setInput] = useState({
+    email: "",
+    password: "",
+  });
 
-  const handleChange = (e) =>{
-      const name = e.target.name
-      const value = e.target.value
+  //fetching data from input
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
 
-      setInput({
-        ...input,
-        [name]: value
-      })
-    }
+    setInput({
+      ...input,
+      [name]: value,
+    });
+  };
 
+  //form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
-
-    try{
-      console.log("first");
-      
-      const response = await login(input.email,input.password);
-
+    try {
+      const response = await login(input.email, input.password);
       console.log(response.data);
-      
-      const {role,token} = response.data;
-      if (role === 'ADMIN') {
+      setAuth({
+        token:response.data.token,
+        firstName:response.data.firstName,
+        email:response.data.email,
+        role:response.data.role
+      })
+
+
+      const { role, token } = response.data;
+      if (role === "ADMIN") {
         alert("Successfully logged into admin dashboard");
-        navigate('/admin/dashboard');
-      } else if (role === 'SHOP_OWNER') {
+        navigate("/admin");
+      } else if (role === "SHOP_OWNER") {
         alert("Successfully logged into shop dashboard");
-        navigate('/shop/dashboard');
+        navigate("/shop/dashboard");
       } else {
         alert("Unknown role");
       }
-    }catch(error){
+    } catch (error) {
       alert("Please enter correct email and password");
     }
   };

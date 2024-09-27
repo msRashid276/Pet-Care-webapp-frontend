@@ -55,7 +55,7 @@ function SideBarLink({ item }) {
 
   return (
     <Link
-      to={item.path}
+      to={`/admin${item.path}`}
       className={classNames(
         pathname === item.path
           ? "bg-neutral-700 text-white"
