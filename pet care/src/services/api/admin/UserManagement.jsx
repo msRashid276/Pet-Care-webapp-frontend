@@ -11,6 +11,22 @@ export const userManagementAdmin = async(token) =>{
         });
         return response;
     }catch(error){
-        console.error('Error fetching in users in admin:', error);
+        console.error('Error in Fetching users in adminDashboard:', error);
+    }
+}
+
+
+
+export const userDeleteManagementAdmin = async(token,userId) =>{
+    try{
+        const response = await axios.delete(`${apiUrl}/api/admin/user/${userId}`,{
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            }
+        });
+        return response;
+    }catch(error){
+        console.error('Error in Deleting users in adminDashboard:', error);
     }
 }

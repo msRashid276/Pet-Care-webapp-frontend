@@ -12,7 +12,7 @@ import LayoutShop from './components/shop/shared/Layout'
 import UsersAdmin from './pages/admin/Users'
 import PrivateRoutes from './utils/PrivateRoutes'
 import { AuthProvider } from './providers/AuthProvider'
-
+import AddUser from './pages/admin/AddUser'
 
 
 function App() {
@@ -21,17 +21,22 @@ function App() {
     <AuthProvider>
       <Router>
           <Routes>
+              
               <Route path='/auth/login' element={<Login/>}/>
+
+              <Route element={<PrivateRoutes allowedRoles={['ADMIN']}/>}>
+                <Route path='/admin' element={<LayoutAdmin/>}>
+                  <Route index element={<DashboardAdmin/>}/>
+                  <Route path='users' element={<UsersAdmin/>}/>
+                  <Route path='addUser' element={<AddUser/>}/>
+                </Route>
+              </Route>
+              
               <Route path='/shop' element={<LayoutShop/>}>
                   <Route path='dashboard' element={<DashboardShop/>}/>
                   <Route path='products' element={<Pets/>}/>
               </Route>
-              <Route element={<PrivateRoutes/>}>
-                <Route path='/admin' element={<LayoutAdmin/>}>
-                  <Route index element={<DashboardAdmin/>}/>
-                  <Route path='users' element={<UsersAdmin/>}/>
-                </Route>
-              </Route>
+             
 
           </Routes>
       </Router>
