@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import {
   userDeleteManagementAdmin,
   userManagementAdmin,
+  userUpdateManagementAdmin,
 } from "../../services/api/admin/UserManagement";
 import AuthContext from "../../providers/AuthProvider";
 import UserCard from "../../components/admin-shop-shared/UserCard";
@@ -9,6 +10,7 @@ import UserCard from "../../components/admin-shop-shared/UserCard";
 
 import { HiUserAdd } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
+import UpdateUserModal from "../../components/admin/UpdateUserModal";
 
 
 
@@ -17,7 +19,10 @@ const Users = () => {
 
   const { auth } = useContext(AuthContext);
   const [users, setUsers] = useState([]);
+  const [selectedUser,setSelectedUser] = useState(null);
+  const[isModalOpen,setIsModalOpen] = useState(false);
   const navigate = useNavigate();
+
 
 
   useEffect(() => {
@@ -46,7 +51,25 @@ const Users = () => {
   };
 
 
+  // updating User
+  const handleUpdate = (user) => {
+    setSelectedUser(user)
+    setIsModalOpen(true)
+  };
 
+  const handleSave = async (updatedUser) => {
+    if (auth.role === "ADMIN") {
+      const response = await userUpdateManagementAdmin(auth.token,updatedUser,updatedUser.id);
+      console.log("responseDelete", response.data);
+      setUsers(users.map((user)=>user.id===updatedUser.id ? updatedUser : user))
+      setIsModalOpen(false);
+    } else {
+      console.error("You are not authorized to view this page");
+    }
+  }
+
+
+  
 
   return (
     <div className="p-6">
@@ -61,9 +84,13 @@ const Users = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         {users.map((user) => (
-          <UserCard key={user.id} user={user} onDelete={handleDelete} />
+          <UserCard key={user.id} user={user} onDelete={handleDelete} onUpdate={()=>handleUpdate(user)} />
         ))}
       </div>
+          {isModalOpen && selectedUser && (
+            <UpdateUserModal user={selectedUser} onSave={handleSave} onClose={() => setIsModalOpen(false)}/>
+          )}
+
     </div>
   );
 };

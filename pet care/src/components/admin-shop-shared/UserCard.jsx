@@ -2,11 +2,17 @@ import React from 'react'
 
 const UserCard = (props) => {
 
-    const {user,onDelete} = props;
+    const {user,onDelete,onUpdate} = props;
 
     const handleDelete = () =>{
         if(window.confirm(`Are you sure you want to delete user ${user.firstName}`)){
                 onDelete(user.id);
+        }
+    }
+
+    const handleUpdate = () =>{
+        if(window.confirm(`Are you sure you want to update the user ${user.firstName}`)){
+                onUpdate(user);
         }
     }
 
@@ -18,7 +24,7 @@ const UserCard = (props) => {
         <p>Email: {user.email}</p>
         <p>Role: {user.role}</p>
         <div className='flex justify-between mt-4'>
-            <button className='bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600' >
+            <button className='bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600' onClick={handleUpdate}>
                 Update
             </button>
             <button className='bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600' onClick={handleDelete}>

@@ -2,7 +2,8 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import AuthContext from "../../providers/AuthProvider";
-import { register } from "../../services/api/Auth";
+import { register } from "../../services/api/admin/UserManagement";
+
 
 const AddUser = () => {
   const navigate = useNavigate();
