@@ -51,7 +51,7 @@ function SideBarLink({ item }) {
 
   return (
     <Link
-      to={item.path}
+      to={`/shop${item.path}`}
       className={classNames(
         pathname === item.path
           ? "bg-neutral-700 text-white"
@@ -61,7 +61,7 @@ function SideBarLink({ item }) {
     >
       <span className="text-xl">{item.icon}</span>
       <span>{item.label}</span>
-    </Link>
+    </Link> 
   );
 }
 

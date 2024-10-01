@@ -13,6 +13,7 @@ import UsersAdmin from './pages/admin/Users'
 import PrivateRoutes from './utils/PrivateRoutes'
 import { AuthProvider } from './providers/AuthProvider'
 import AddUser from './pages/admin/AddUser'
+import ShopDetails from './pages/shop/ShopDetails'
 
 
 function App() {
@@ -21,20 +22,23 @@ function App() {
     <AuthProvider>
       <Router>
           <Routes>
-              
-              <Route path='/auth/login' element={<Login/>}/>
 
-              <Route element={<PrivateRoutes allowedRoles={['ADMIN']}/>}>
+            
+              
+              {/* <Route path='/auth/login' element={<Login/>}/> */}
+
+              {/* <Route element={<PrivateRoutes allowedRoles={['ADMIN']}/>}>
                 <Route path='/admin' element={<LayoutAdmin/>}>
                   <Route index element={<DashboardAdmin/>}/>
                   <Route path='users' element={<UsersAdmin/>}/>
                   <Route path='addUser' element={<AddUser/>}/>
                 </Route>
-              </Route>
+              </Route> */}
               
               <Route path='/shop' element={<LayoutShop/>}>
-                  <Route path='dashboard' element={<DashboardShop/>}/>
+                  <Route index element={<DashboardShop/>}/>
                   <Route path='products' element={<Pets/>}/>
+                  <Route path='details' element={<ShopDetails/>}/>
               </Route>
              
 

@@ -5,7 +5,11 @@ import classNames from 'classnames'
 
 const Header = () => {
   return (
-    <div className='bg-white h-16 px-4 flex justify-end items-center border-b border-gray-200'>
+    <div className='bg-white h-16 px-4 flex justify-between items-center border-b border-gray-200'>
+
+		<div>
+			<h3 className='text-gray-500 text-lg'>DashBoard</h3>
+		</div>
        
         <div className='flex items-center gap-2 mr-2'>
         <Popover className="relative">

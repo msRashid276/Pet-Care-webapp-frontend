@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import {
   userDeleteManagementAdmin,
   userManagementAdmin,
+  userSearchManagementAdmin,
   userUpdateManagementAdmin,
 } from "../../services/api/admin/UserManagement";
 import AuthContext from "../../providers/AuthProvider";
@@ -23,16 +24,17 @@ const Users = () => {
 
   useEffect(() => {
     // Fetching User
-    const fetchUsers = async () => {
-      if (auth.role === "ADMIN") {
-        const response = await userManagementAdmin(auth.token);
-        setUsers(response.data);
-      } else {
-        console.error("You are not authorized to view this page");
-      }
-    };
     fetchUsers();
   }, [auth]);
+
+  const fetchUsers = async () => {
+    if (auth.role === "ADMIN") {
+      const response = await userManagementAdmin(auth.token);
+      setUsers(response.data);
+    } else {
+      console.error("You are not authorized to view this page");
+    }
+  };
 
   // Deleting User
   const handleDelete = async (userId) => {
@@ -69,13 +71,26 @@ const Users = () => {
   };
 
 
-  const handleSearch = (e) => {
+  const handleSearch = async (e) => {
+    e.preventDefault();
       setSearchKeyword(e.target.value);
+  
+      if(searchKeyword.trim()===""){
+        fetchUsers();
+      }else{
+        if (auth.role === "ADMIN") {
+          console.log(searchKeyword);
+          const response = await userSearchManagementAdmin(auth.token, searchKeyword);
+          console.log("responseDelete", response.data);
+          setUsers(response.data);
+    
+        } else {
+          console.error("You are not authorized to view this page");
+        }
+      } 
   }
 
-  const HandleSearchButton = () =>{
-      
-  }
+
 
 
   return (
@@ -85,12 +100,11 @@ const Users = () => {
           <HiOutlineSearch
             fontSize={20}
             className="absolute top-1/2 -translate-y-1/2 left-3 text-gray-400"
-            onClick={HandleSearchButton}
           />
           <input
             type="text"
             placeholder="Search..."
-            value={setSearchKeyword}
+            value={searchKeyword}
             onChange={handleSearch}
             className="text-sm focus:outline-none active:outline-none h-10 w-[24rem] border border-gray-300 rounded-sm pl-11 pr-4"
           />

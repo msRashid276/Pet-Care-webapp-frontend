@@ -67,3 +67,18 @@ export const userUpdateManagementAdmin = async(token,user,userId) =>{
         console.error('Error in Updating users in adminDashboard:', error);
     }
 }
+
+
+export const userSearchManagementAdmin = async(token,keyword) =>{
+    try{
+        const response = await axios.get(`${apiUrl}/api/admin/users/search?keyword=${keyword}`,{
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            }
+        });
+        return response;
+    }catch(error){
+        console.error('Error in Updating users in adminDashboard:', error);
+    }
+}

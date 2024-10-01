@@ -9,18 +9,20 @@ import {
 	HiOutlineCog
 } from 'react-icons/hi'
 
+import { TbListDetails } from "react-icons/tb";
+
 export const DASHBOARD_SIDEBAR_LINKS = [
 	{
 		key: 'dashboard',
 		label: 'Dashboard',
-		path: '/',
+		path: '',
 		icon: <HiOutlineViewGrid />
 	},
 	{
-		key: 'products',
-		label: 'Products',
-		path: '/products',
-		icon: <HiOutlineCube />
+		key: 'shopDetails',
+		label: 'Details',
+		path: '/details',
+		icon: <TbListDetails />
 	},
 	{
 		key: 'orders',
