@@ -6,8 +6,8 @@ const ShopDetails = () => {
         <div className='py-5 flex justify-center items-center'>
             <h1 className='text-2xl lg:text-4xl text-center font-bold p-5'>Roms N Raks</h1>
 
-            <div>
-              
+            <div className='flex'>
+
             </div>
 
         </div>
