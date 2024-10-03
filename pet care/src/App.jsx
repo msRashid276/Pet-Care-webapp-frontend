@@ -14,6 +14,8 @@ import PrivateRoutes from './utils/PrivateRoutes'
 import { AuthProvider } from './providers/AuthProvider'
 import AddUser from './pages/admin/AddUser'
 import ShopDetails from './pages/shop/ShopDetails'
+import ShopRegister from './pages/shop/Register'
+import RegisterShop from './pages/shop/RegisterShop'
 
 
 function App() {
@@ -34,13 +36,15 @@ function App() {
                   <Route path='addUser' element={<AddUser/>}/>
                 </Route>
               </Route> */}
-              
+
+              <Route path='/auth/register' element={<ShopRegister/>}/>
+              <Route path='/shop/addShop' element={<RegisterShop/>}/>
               <Route path='/shop' element={<LayoutShop/>}>
                   <Route index element={<DashboardShop/>}/>
                   <Route path='products' element={<Pets/>}/>
                   <Route path='details' element={<ShopDetails/>}/>
               </Route>
-             
+            
 
           </Routes>
       </Router>

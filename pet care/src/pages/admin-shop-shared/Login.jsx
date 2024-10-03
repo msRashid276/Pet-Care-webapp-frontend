@@ -30,6 +30,7 @@ const Login = () => {
     try {
       const response = await login(input.email, input.password);
       console.log(response.data);
+      
       setAuth({
         token:response.data.token,
         firstName:response.data.firstName,
