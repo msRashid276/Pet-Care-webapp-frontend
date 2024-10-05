@@ -27,7 +27,7 @@ function App() {
 
             
               
-              {/* <Route path='/auth/login' element={<Login/>}/> */}
+              <Route path='/auth/login' element={<Login/>}/>
 
               {/* <Route element={<PrivateRoutes allowedRoles={['ADMIN']}/>}>
                 <Route path='/admin' element={<LayoutAdmin/>}>
@@ -37,7 +37,7 @@ function App() {
                 </Route>
               </Route> */}
 
-              <Route path='/auth/register' element={<ShopRegister/>}/>
+              <Route path='/shop/register' element={<ShopRegister/>}/>
               <Route path='/shop/addShop' element={<RegisterShop/>}/>
               <Route path='/shop' element={<LayoutShop/>}>
                   <Route index element={<DashboardShop/>}/>
