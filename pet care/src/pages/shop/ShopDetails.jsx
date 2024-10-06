@@ -1,8 +1,50 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { checkShopIfExist } from "../../services/api/shop/ShopManagement";
+import AuthContext from "../../providers/AuthProvider";
+
 
 const ShopDetails = () => {
+
+  const {auth} = useContext(AuthContext);
+  const [shopDetails,setShopDetails] = useState([]);
+
+  useEffect(()=>{
+    fetchShopDetails();
+  },[auth])
+
+
+  const fetchShopDetails =async () => {
+
+    try{
+      const response = await checkShopIfExist(auth.token);
+      console.log(response.data,"shopDetails");
+
+      if(response.status === 200 || response.status === 201){
+          setShopDetails(response.data);
+      }
+      
+      
+      
+    }catch(error){
+      console.log("no shop found: ",error);
+      
+    }
+  }
+
+  if (!shopDetails) {
+    return <div>Loading...</div>;  
+  }
+
   return (
+    
+    
+
     <div className="bg-gray-900 text-white p-6 w-full h-screen">
+
+      {shopDetails.map((details)=>(
+        
+      ))}
+      
       <h1 className="text-3xl font-bold text-center py-5">Roms N Raks</h1>
 
       {/* Restaurant Section */}

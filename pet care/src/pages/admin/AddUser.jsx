@@ -35,15 +35,30 @@ const AddUser = () => {
     console.log(input);
     
     try {
-      const response = await register(input.firstName,input.lastName,input.email, input.password,input.role,auth.token);
-      
-        alert("Successfully Added");
-        navigate("/admin/users")
-    
+      const response = await register(
+        input.firstName,
+        input.lastName,
+        input.email,
+        input.password,
+        input.role,
+        auth.token
+      );
+  
+      if (response.status === 201 || response.status === 200) {
+     
+        alert("User successfully added!");
+        navigate("/admin/users");
+
+      } else {
+       
+        const errorMessage = response.data?.message || "Failed to add user. Please check your input.";
+        alert(errorMessage);
+      }
     } catch (error) {
-      alert("Please enter correct");
-      console.log(error);
       
+      const errorMsg = error.response?.data?.message || "An unexpected error occurred. Please try again.";
+      alert(errorMsg);
+      console.error("Error during registration:", error);
     }
   };
 

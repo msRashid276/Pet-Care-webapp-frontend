@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../services/api/Auth";
 import AuthContext from "../../providers/AuthProvider";
+import { checkShopIfExist } from "../../services/api/shop/ShopManagement";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -40,12 +41,33 @@ const Login = () => {
 
 
       const { role, token } = response.data;
+
       if (role === "ADMIN") {
         alert("Successfully logged into admin dashboard");
         navigate("/admin");
+
       } else if (role === "SHOP_OWNER") {
-        alert("Successfully logged into shop dashboard");
-        navigate("/shop/dashboard");
+        alert("Successfully logged in as shop owner");
+
+        try{
+          const response = await checkShopIfExist(token);
+
+          if (response && (response.status === 200 || response.status === 201)) {
+            alert("Successfully logged in to shop dashboard");
+            navigate("/shop");
+          } else {
+            const errorMessage =
+              response.data?.message ||
+              "Error checking shop existence";
+            alert(errorMessage);
+          }
+
+        }catch(error){
+
+          const errorMsg = error.response?.data?.message || " Please add shop.";
+          alert(errorMsg);
+          navigate("/shop/addShop");
+        }
       } else {
         alert("Unknown role");
       }

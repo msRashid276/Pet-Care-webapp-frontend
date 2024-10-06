@@ -1,36 +1,30 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
+import { register } from "../../services/api/Auth";
 import { useNavigate } from "react-router-dom";
-
-import AuthContext from "../../providers/AuthProvider";
-import { register } from "../../services/api/admin/UserManagement";
 
 const Register = () => {
   const navigate = useNavigate();
-  const { auth } = useContext(AuthContext);
 
   const [input, setInput] = useState({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
-    role: "",
+    role: "SHOP_OWNER",
   });
 
-  //fetching data from input
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
 
-    setInput({
-      ...input,
+    setInput((prev) => ({
+      ...prev,
       [name]: value,
-    });
+    }));
   };
 
-  //form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     console.log(input);
 
     try {
@@ -39,15 +33,25 @@ const Register = () => {
         input.lastName,
         input.email,
         input.password,
-        input.role,
-        auth.token
+        input.role
       );
+      console.log(response);
 
-      alert("Successfully Added");
-      navigate("/admin/users");
+      if (response && (response.status === 200 || response.status === 201)) {
+        alert("User successfully added!");
+        navigate("/auth/login");
+      } else {
+        const errorMessage =
+          response.data?.message ||
+          "Failed to add user. Please check your input.";
+        alert(errorMessage);
+      }
     } catch (error) {
-      alert("Please enter correct");
-      console.log(error);
+      const errorMsg =
+        error.response?.data?.message ||
+        "An unexpected error occurred. Please try again.";
+      alert(errorMsg);
+      console.error("Error during registration:", error);
     }
   };
 
@@ -131,19 +135,19 @@ const Register = () => {
           <div className="mb-6">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="password"
+              htmlFor="role"
             >
               Role
             </label>
-            <select
+            <input
               id="role"
+              type="text"
               name="role"
-              value={input.role}
+              value="SHOP_OWNER"
               onChange={handleChange}
+              placeholder="Enter your role"
               className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-500"
-            >
-              <option value="SHOP_OWNER">SHOP_OWNER</option>
-            </select>
+            />
           </div>
 
           <div className="flex items-center justify-between mb-4">
