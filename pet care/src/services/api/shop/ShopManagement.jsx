@@ -14,3 +14,20 @@ export const checkShopIfExist = async(token) =>{
         console.error('Error in Fetching shop of user:', error);
     }
 }
+
+
+export const registerShop = async(formData,token) =>{
+    
+    
+    try{
+        const response = await axios.post(`${apiUrl}/api/shop-owner/pet-shop`,formData,{
+            headers: {
+                'Authorization': `Bearer ${token}`,
+               "Content-Type": "multipart/form-data"
+            }
+        });
+        return response;
+    }catch(error){
+        console.error('Error in registering shop :', error);
+    }
+}

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 import { login } from "../../services/api/Auth";
 import AuthContext from "../../providers/AuthProvider";
 import { checkShopIfExist } from "../../services/api/shop/ShopManagement";
@@ -9,8 +9,8 @@ const Login = () => {
   const { setAuth } = useContext(AuthContext);
 
   const [input, setInput] = useState({
-    email: "",
-    password: "",
+    email: "remya@gmail.com",
+    password: "r@123",
   });
 
   //fetching data from input
@@ -32,13 +32,18 @@ const Login = () => {
       const response = await login(input.email, input.password);
       console.log(response.data);
       
-      setAuth({
+
+     const authData = {
         token:response.data.token,
         firstName:response.data.firstName,
         email:response.data.email,
         role:response.data.role
-      })
+      }
 
+      setAuth(authData);
+
+      localStorage.setItem("auth",JSON.stringify(authData))
+ 
 
       const { role, token } = response.data;
 

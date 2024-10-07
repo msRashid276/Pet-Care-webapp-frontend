@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const AuthContext = React.createContext({});
 
@@ -10,6 +10,13 @@ export function AuthProvider({children}){
         email:'',
         role:''
     })
+
+    useEffect(()=>{
+       const savedAuth = localStorage.getItem("auth")
+       if(savedAuth){
+        setAuth(JSON.parse(savedAuth));
+       }
+    },[])
 
     return(
         <div>
