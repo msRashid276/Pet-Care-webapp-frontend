@@ -1,12 +1,16 @@
 import React, { useContext, useState } from "react";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
-import { registerShop } from "../../services/api/shop/ShopManagement";
+
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../providers/AuthProvider";
+import { registerShop } from "../../services/api/shop/ShopManagement";
 
 const RegisterShop = () => {
   
   const {auth} = useContext(AuthContext);
+
+  console.log(auth);
+  
   const navigate = useNavigate();
 
   const [shop,setShop] = useState({
@@ -30,7 +34,7 @@ const RegisterShop = () => {
     open: false
   });
 
-  const [imageFile,   setImageFile] = useState();
+  const [imageFile,setImageFile] = useState(null);
  
   
 
@@ -85,15 +89,13 @@ const RegisterShop = () => {
         "petshop",
         new Blob([JSON.stringify(shop)], { type: "application/json" })
       )
-
-   
-
           
       try {
-       
         
         const response = await registerShop(formData,auth.token);
         console.log(response, "shop register output");
+        console.log(auth.token);
+        
   
         if (response.status === 200 || response.status === 201) {
 
@@ -112,12 +114,11 @@ const RegisterShop = () => {
     <div className="bg-gray-900 w-full min-h-screen text-white py-10">
       <h1 className="text-center text-2xl font-bold pb-10">Add New PetShop</h1>
 
-      <form action="" onSubmit={handleSubmit}>
+      <form action="" onSubmit={handleSubmit} >
         <div className="grid grid-cols-1 gap-5 px-10 overflow-hidden">
           <div className="">
             <input
               type="file"
-              accept="image/*"
               id="fileInput"
               style={{ display: "none" }}
               onChange={handleImageChange}
