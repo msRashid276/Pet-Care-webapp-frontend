@@ -17,6 +17,7 @@ import ShopDetails from './pages/shop/ShopDetails'
 import ShopRegister from './pages/shop/Register'
 import RegisterShop from './pages/shop/RegisterShop'
 import RegisterUser from './pages/user/Register'
+import LoginUser from './pages/user/Login'
 import LayoutUser from './components/user/shared/Layout'
 
 
@@ -49,8 +50,9 @@ function App() {
             
 
 
-            <Route path='/' element={<LayoutUser/>}>
-                <Route index element={<RegisterUser/>}/>
+            <Route path='/user' element={<LayoutUser/>}>
+                <Route path='register' element={<RegisterUser/>}/>
+                <Route path='login' element={<LoginUser/>}/>
             </Route>
 
           </Routes>
