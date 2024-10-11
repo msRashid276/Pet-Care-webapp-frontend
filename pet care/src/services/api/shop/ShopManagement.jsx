@@ -6,7 +6,7 @@ export const checkShopIfExist = async(token) =>{
         const response = await axios.get(`${apiUrl}/api/shop-owner/pet-shop/user`,{
             headers: {
                 'Authorization': `Bearer ${token}`,
-                "Content-Type": "multipart/form-data",
+                'Content-Type': 'application/json',
             }
         });
         return response;
@@ -20,11 +20,12 @@ export const registerShop = async(formData,token) =>{
     
     
     try{
-      
+            console.log(formData,"sssssssssssss");
+            
         const response = await axios.post(`${apiUrl}/api/shop-owner/pet-shop`, formData ,{
             headers: {
                 'Authorization': `Bearer ${token}`,
-                'Content-Type': 'multipart/form-data'
+                "Content-Type": "multipart/form-data",
             }
         });
         return response;

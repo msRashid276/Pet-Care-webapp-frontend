@@ -30,7 +30,7 @@ function App() {
 
             
               
-              {/* <Route path='/auth/login' element={<Login/>}/> */}
+              <Route path='/auth/login' element={<Login/>}/>
 
               {/* <Route element={<PrivateRoutes allowedRoles={['ADMIN']}/>}>
                 <Route path='/admin' element={<LayoutAdmin/>}>
@@ -40,20 +40,20 @@ function App() {
                 </Route>
               </Route> */}
 
-              {/* <Route path='/shop/register' element={<ShopRegister/>}/>
+              <Route path='/shop/register' element={<ShopRegister/>}/>
               <Route path='/shop/addShop' element={<RegisterShop/>}/>
               <Route path='/shop' element={<LayoutShop/>}>
                   <Route index element={<DashboardShop/>}/>
                   <Route path='products' element={<Pets/>}/>
                   <Route path='details' element={<ShopDetails/>}/>
-              </Route> */}
+              </Route>
             
 
 
-            <Route path='/user' element={<LayoutUser/>}>
+            {/* <Route path='/user' element={<LayoutUser/>}>
                 <Route path='register' element={<RegisterUser/>}/>
                 <Route path='login' element={<LoginUser/>}/>
-            </Route>
+            </Route> */}
 
           </Routes>
       </Router>

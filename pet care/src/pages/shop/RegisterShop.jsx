@@ -4,122 +4,147 @@ import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../providers/AuthProvider";
 import { registerShop } from "../../services/api/shop/ShopManagement";
+import { useFormik } from "formik";
+import { CircularProgressbar } from "react-circular-progressbar";
+import axios from "axios";
 
 const RegisterShop = () => {
-  
-  const {auth} = useContext(AuthContext);
+  const { auth } = useContext(AuthContext);
+  // const formik = useFormik();
+  const [imageFile, setImageFile] = useState([]);
+  const [imagePreview,setImagePreview] = useState([]);
 
-  console.log(auth);
-  
   const navigate = useNavigate();
 
-  const [shop,setShop] = useState({
+  const [shop, setShop] = useState({
     name: "Roms N Raks",
     description: "best petshop",
     address: {
-        street: "Palarivattom",
-        city: "Ernakulam",
-        state: "Kerala",
-        zipCode: "682019"
+      street: "Palarivattom",
+      city: "Ernakulam",
+      state: "Kerala",
+      zipCode: "682019",
     },
     contactInformation: {
-        email: "roms@gmail.com",
-        mobile: "12345",
-        twitter: "roms@twitter",
-        instagram: "roms@instagram"
+      email: "roms@gmail.com",
+      mobile: "12345",
+      twitter: "roms@twitter",
+      instagram: "roms@instagram",
     },
     openingHours: "Mon-Sat: 9:00 AM - 7:00 PM",
-    images: "",
+    images: [],
     registrationDate: "",
-    open: false
+    open: false,
   });
 
-  const [imageFile,setImageFile] = useState(null);
- 
-  
-
-
-  const handleInputChange = (e) => {
-        const name = e.target.name;
-        const value = e.target.value;
-
-        if (name in shop.address) {
-          setShop((prev) => ({
-            ...prev,
-            address: {
-              ...prev.address,
-              [name]: value,
-            },
-          }));
-        } else if (name in shop.contactInformation) {
-          setShop((prev) => ({
-            ...prev,
-            contactInformation: {
-              ...prev.contactInformation,
-              [name]: value,
-            },
-          }));
-        } else {
-          setShop((prev) => ({
-            ...prev,
-            [name]: value,
-          }));
-        }
-  }
-
   const handleImageChange = (e) => {
-    console.log(e.target.files);
-    setImageFile(e.target.files[0]);
+    
+    const files = Array.from(e.target.files);
+    setImageFile((prevFiles)=>[...prevFiles,...files]);
+
+    
+    const previews = files.map((file)=>URL.createObjectURL(file));
+    setImagePreview((previewImage)=>[...previewImage,...previews]);
+
   };
 
+  console.log(imageFile,"yooo");
+
+  const handleInputChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    if (name in shop.address) {
+      setShop((prev) => ({
+        ...prev,
+        address: {
+          ...prev.address,
+          [name]: value,
+        },
+      }));
+    } else if (name in shop.contactInformation) {
+      setShop((prev) => ({
+        ...prev,
+        contactInformation: {
+          ...prev.contactInformation,
+          [name]: value,
+        },
+      }));
+    } else {
+      setShop((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+  };
 
   const handleSubmit = async (e) => {
-      e.preventDefault();
+    e.preventDefault();
 
-       // Check if an image file is selected
-    if (!imageFile) {
-        alert("Please select an image file.");
-        return;
-    }
-      
-      
-      const formData = new FormData();
-      formData.append("imageFile",imageFile);
-      formData.append(
-        "petshop",
-        new Blob([JSON.stringify(shop)], { type: "application/json" })
-      )
-          
-      try {
-        
-        const response = await registerShop(formData,auth.token);
-        console.log(response, "shop register output");
-        console.log(auth.token);
-        
-  
-        if (response.status === 200 || response.status === 201) {
+   
+    
 
-          alert("Added Petshop Successfully")
-          navigate("/shop/details")
-        }
-      } catch (error) {
-        console.log("Status code",error);
-      }
+    // Check if at least one image file is selected
+    if (imageFile.length === 0) {
+      alert("Please select at least one image file.");
+      return;
   }
 
+    try {
+      const shopImage = new FormData();
 
+      imageFile.forEach((file)=>(
+        shopImage.append("shopImageFile",file)
+      ))
+   
 
+      const uploadResponse = await axios.post(
+        "http://localhost:8080/cloudinary/upload",
+        shopImage,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log(uploadResponse, "uploadResponse");
+
+      const imageUrl = uploadResponse.data.secure_url;
+      console.log(imageUrl, "imageurl");
+
+      const updatedImage = [...shop.images, imageUrl];
+      const petShopData = { ...shop, images: updatedImage };
+
+      // const formData = new FormData();
+      // formData.append(
+      //   "shop",
+      //   new Blob([JSON.stringify(petShopData)], { type: "application/json" })
+      // );
+
+      // console.log(petShopData, "petShopData");
+
+      // const response = await registerShop(formData, auth.token);
+      // if (response.status === 200 || response.status === 201) {
+      //   alert("Added Petshop Successfully");
+      //   navigate("/shop/details");
+      // }
+    } catch (error) {
+      console.log("Status code", error);
+    }
+  };
 
   return (
     <div className="bg-gray-900 w-full min-h-screen text-white py-10">
       <h1 className="text-center text-2xl font-bold pb-10">Add New PetShop</h1>
 
-      <form action="" onSubmit={handleSubmit} >
+      <form action="" onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 gap-5 px-10 overflow-hidden">
-          <div className="">
+          <div className="flex gap-2">
             <input
               type="file"
+              accept="image/*"
               id="fileInput"
+              multiple
               style={{ display: "none" }}
               onChange={handleImageChange}
             />
@@ -127,7 +152,20 @@ const RegisterShop = () => {
               <span className="w-16 h-16 md:w-24 md:h-24 cursor-pointer p-3 flex items-center justify-center border rounded-md border-gray-600">
                 <MdOutlineAddPhotoAlternate />
               </span>
+              {imageFile && (
+                <div className="absolute left-0 right-0 top-0 bottom-0 w-24 h-24 flex justify-center items-center">
+                  <CircularProgressbar />
+                </div>
+              )}
             </label>
+            <div className="flex flex-wrap gap-3">
+              {imagePreview.map((previewImage,index)=>(
+                <div key={index} className="relative ">
+                  <img src={previewImage} alt={`Selected ${index}`}   className="w-24 h-24 rounded-sm"/>
+                </div>
+              ))}
+                
+            </div>
           </div>
 
           <div className="flex justify-center items-center">
@@ -161,7 +199,6 @@ const RegisterShop = () => {
                 value={shop.openingHours}
                 name="openingHours"
                 onChange={handleInputChange}
-                
               />
               <label
                 htmlFor="Opening hours"
