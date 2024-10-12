@@ -25,7 +25,7 @@ const ShopDetails = () => {
 
   // If shopDetails is null or not loaded yet
   if (!shopDetails) {
-    return <div>Loading...</div>;
+    return <div className="text-3xl font-semibold ">Loading...</div>;
   }
 
   const { address, contactInformation, description, name, openingHours, open, owner } = shopDetails;

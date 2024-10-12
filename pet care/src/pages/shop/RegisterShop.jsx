@@ -109,25 +109,26 @@ const RegisterShop = () => {
       );
       console.log(uploadResponse, "uploadResponse");
 
-      const imageUrl = uploadResponse.data.secure_url;
-      console.log(imageUrl, "imageurl");
+      const imageUrls = uploadResponse.data.map((image) => image.secure_url);
+      console.log(imageUrls, "imageUrls");
+      
 
-      const updatedImage = [...shop.images, imageUrl];
+      const updatedImage = [...shop.images, ...imageUrls];
       const petShopData = { ...shop, images: updatedImage };
 
-      // const formData = new FormData();
-      // formData.append(
-      //   "shop",
-      //   new Blob([JSON.stringify(petShopData)], { type: "application/json" })
-      // );
+      const formData = new FormData();
+      formData.append(
+        "shop",
+        new Blob([JSON.stringify(petShopData)], { type: "application/json" })
+      );
 
-      // console.log(petShopData, "petShopData");
+      console.log(petShopData, "petShopData");
 
-      // const response = await registerShop(formData, auth.token);
-      // if (response.status === 200 || response.status === 201) {
-      //   alert("Added Petshop Successfully");
-      //   navigate("/shop/details");
-      // }
+      const response = await registerShop(formData, auth.token);
+      if (response.status === 200 || response.status === 201) {
+        alert("Added Petshop Successfully");
+        navigate("/shop/details");
+      }
     } catch (error) {
       console.log("Status code", error);
     }

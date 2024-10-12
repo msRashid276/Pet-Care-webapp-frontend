@@ -10,12 +10,13 @@ import {
 } from 'react-icons/hi'
 
 import { TbListDetails } from "react-icons/tb";
+import { IoMdAdd } from "react-icons/io";
 
 export const DASHBOARD_SIDEBAR_LINKS = [
 	{
 		key: 'dashboard',
 		label: 'Dashboard',
-		path: '',
+		path: '/dashboard',
 		icon: <HiOutlineViewGrid />
 	},
 	{
@@ -23,6 +24,18 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 		label: 'Details',
 		path: '/details',
 		icon: <TbListDetails />
+	},
+	{
+		key: 'species',
+		label: 'Add Species',
+		path: '/add-species',
+		icon: <IoMdAdd />
+	},
+	{
+		key: 'pets',
+		label: 'Add Pets',
+		path: '/add-pets',
+		icon: <IoMdAdd />
 	},
 	{
 		key: 'orders',

@@ -6,7 +6,6 @@ import './App.css'
 import Login from './pages/admin-shop-shared/Login'
 import DashboardShop from './pages/shop/Dashboard'
 import DashboardAdmin from './pages/admin/Dashboard'
-import Pets from './pages/shop/Pets'
 import LayoutAdmin from './components/admin/shared/Layout'
 import LayoutShop from './components/shop/shared/Layout'
 import UsersAdmin from './pages/admin/Users'
@@ -19,6 +18,9 @@ import RegisterShop from './pages/shop/RegisterShop'
 import RegisterUser from './pages/user/Register'
 import LoginUser from './pages/user/Login'
 import LayoutUser from './components/user/shared/Layout'
+import SpeciesAdd from './pages/shop/SpeciesAdd'
+import PetsAdd from './pages/shop/PetsAdd'
+
 
 
 function App() {
@@ -43,9 +45,11 @@ function App() {
               <Route path='/shop/register' element={<ShopRegister/>}/>
               <Route path='/shop/addShop' element={<RegisterShop/>}/>
               <Route path='/shop' element={<LayoutShop/>}>
-                  <Route index element={<DashboardShop/>}/>
-                  <Route path='products' element={<Pets/>}/>
+                  <Route path='dashboard' element={<DashboardShop/>}/>
                   <Route path='details' element={<ShopDetails/>}/>
+                  <Route path='add-species' element={<SpeciesAdd/>}/>
+                  <Route path='add-pets' element={<PetsAdd/>}/>
+                 
               </Route>
             
 
