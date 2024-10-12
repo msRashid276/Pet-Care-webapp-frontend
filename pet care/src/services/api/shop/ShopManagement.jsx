@@ -79,3 +79,19 @@ export const checkSpeciesIfExist = async(token) =>{
         console.error('Error in Fetching species of user:', error);
     }
 }
+
+
+export const AddPet = async(formData,token) =>{
+     
+    try{           
+        const response = await axios.post(`${apiUrl}/api/shop-owner/pets`, formData ,{
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                "Content-Type": "multipart/form-data",
+            }
+        });
+        return response;
+    }catch(error){
+        console.error('Error in Adding Pet:', error);
+    }
+}

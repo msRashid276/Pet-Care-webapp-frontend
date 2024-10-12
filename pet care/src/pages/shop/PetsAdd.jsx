@@ -4,6 +4,7 @@ import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../providers/AuthProvider";
 import {
+  AddPet,
   checkShopIfExist,
   checkSpeciesIfExist,
   registerShop,
@@ -18,67 +19,53 @@ const PetsAdd = () => {
   const navigate = useNavigate();
   const [species, setSpecies] = useState([]);
 
-  useEffect(() => { 
-
-      fetchSpeciesList();
-  
-    
-    // petShopExistence();
+  useEffect(() => {
+    fetchSpeciesList();
+    petShopExistence();
   }, [auth]);
 
   const fetchSpeciesList = async () => {
-
-
     try {
-    const token = auth?.token;  // Fetching token from AuthContext
-    if (token) {
-      const response = await checkSpeciesIfExist(token);
-      console.log(response.data, "speciesDetails");
+      const token = auth?.token; // Fetching token from AuthContext
+      if (token) {
+        const response = await checkSpeciesIfExist(token);
 
-      if (response.status === 200 || response.status === 201) {
-        setSpecies(response.data);
+        if (response.status === 200 || response.status === 201) {
+          setSpecies(response.data);
+        }
+      } else {
+        console.log("No token available in context.");
       }
-    } else {
-      console.log("No token available in context.");
+    } catch (error) {
+      console.log("no species found: ", error);
     }
-  } catch (error) {
-    console.log("no species found: ", error);
-  }
-    
-
-    
   };
 
-  
-  const petShopExistence = async() =>{
-
-    if(auth){
-      try {
+  const petShopExistence = async () => {
+    try {
+      const token = auth?.token;
+      if (token) {
         const response = await checkShopIfExist(auth.token); // Call to check if shop exists
         if (response && (response.status === 200 || response.status === 201)) {
           const petShopId = response.data.id; // Adjust according to your actual response structure
-          console.log(petShopId,"petshopid");
-          
+
           setPet((prev) => ({
             ...prev,
             petShopId: petShopId, // Set petShopId in the pet state
           }));
-          
-          
         } else {
           const errorMessage =
             response.data?.message || "Error checking shop existence";
           alert(errorMessage);
         }
-      } catch (error) {
-        const errorMsg = error.response?.data?.message || "Please add shop.";
-        alert(errorMsg);
+      } else {
+        console.log("No token available in context.");
       }
+    } catch (error) {
+      const errorMsg = error.response?.data?.message || "Please add shop.";
+      alert(errorMsg);
     }
-    
-  }
-  
-
+  };
 
   const [pet, setPet] = useState({
     name: "Buddy",
@@ -91,6 +78,7 @@ const PetsAdd = () => {
     description:
       "A friendly and playful golden retriever, great with families and children.",
     petShopId: "",
+    available: false
   });
 
   const handleImageChange = (e) => {
@@ -121,8 +109,8 @@ const PetsAdd = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
- 
-    
+
+    console.log(pet);
 
     // Check if at least one image file is selected
     if (imageFile.length === 0) {
@@ -131,47 +119,47 @@ const PetsAdd = () => {
     }
 
     try {
-      const shopImage = new FormData();
+      const petImage = new FormData();
 
-      imageFile.forEach((file) => shopImage.append("shopImageFile", file));
+      imageFile.forEach((file) => petImage.append("shopImageFile", file));
 
-      const uploadResponse = await axios.post(
+      const petImageUploadResponse = await axios.post(
         "http://localhost:8080/cloudinary/upload",
-        shopImage,
+        petImage,
         {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         }
       );
-      console.log(uploadResponse, "uploadResponse");
+      console.log(petImageUploadResponse, "petImageUploadResponse");
 
-      const imageUrls = uploadResponse.data.map((image) => image.secure_url);
+      const imageUrls = petImageUploadResponse.data.map(
+        (image) => image.secure_url
+      );
       console.log(imageUrls, "imageUrls");
 
-      const updatedImage = [...shop.images, ...imageUrls];
-      const petShopData = { ...shop, images: updatedImage };
+      const updatedImage = [...pet.images, ...imageUrls];
+      const petData = { ...pet, images: updatedImage };
 
       const formData = new FormData();
       formData.append(
-        "shop",
-        new Blob([JSON.stringify(petShopData)], { type: "application/json" })
+        "pet",
+        new Blob([JSON.stringify(petData)], { type: "application/json" })
       );
 
-      console.log(petShopData, "petShopData");
+      console.log(petData, "petData");
 
-      const response = await registerShop(formData, auth.token);
+      const response = await AddPet(formData, auth.token); //Adding pets
       if (response.status === 200 || response.status === 201) {
-        alert("Added Petshop Successfully");
+        alert("Added Pet Successfully");
         navigate("/shop/details");
+        console.log(response, "response of pet added");
       }
     } catch (error) {
       console.log("Status code", error);
     }
   };
-
-
-
 
   return (
     <div className="bg-gray-900 w-full min-h-screen text-white py-10">
@@ -230,10 +218,12 @@ const PetsAdd = () => {
               onChange={handleSpeciesChange}
               value={pet.speciesId}
             >
-              <option  value="" disabled>Select Species...</option>
+              <option value="" disabled>
+                Select Species...
+              </option>
               {species.map((specie) => (
-                <option  value={specie.id} key={specie.id}>
-                     {specie.name || 'Unknown Species'}
+                <option value={specie.id} key={specie.id}>
+                  {specie.name || "Unknown Species"}
                 </option>
               ))}
             </select>
@@ -251,43 +241,66 @@ const PetsAdd = () => {
           </div>
 
           <div className="flex flex-col md:flex-row justify-center gap-2">
-         
-            <input
-              type="number"
-              className="bg-transparent border border-gray-700 rounded-lg w-full p-2 hover:border-gray-700 focus:outline-none dark:focus:border-gray-500"
-              placeholder="Age"
-              name="age"
-              onChange={handleInputChange}
-              value={pet.age}
-            />
-          
-            <select
-              className="bg-transparent border  border-gray-700 rounded-lg w-full p-2 hover:border-gray-700 focus:outline-none "
-              name="gender"
-              onChange={handleInputChange}
-              value={pet.gender} // Assuming shop.gender holds the selected value
-            >
-              <option className="text-black" value="" disabled>
-                Select Gender
-              </option>
-              <option className="text-black" value="male">Male</option>
-              <option className="text-black" value="female">Female</option>
-            </select>
-
+            <div className="w-full">
+              <input
+                type="number"
+                className="bg-transparent border border-gray-700 rounded-lg w-full p-2 hover:border-gray-700 focus:outline-none dark:focus:border-gray-500"
+                placeholder="Age"
+                name="age"
+                onChange={handleInputChange}
+                value={pet.age}
+              />
+            </div>
+            <div className="w-full">
+              <select
+                className="bg-transparent border  border-gray-700 rounded-lg w-full p-2 hover:border-gray-700 focus:outline-none "
+                name="gender"
+                onChange={handleInputChange}
+                value={pet.gender} // Assuming shop.gender holds the selected value
+              >
+                <option className="text-black" value="" disabled>
+                  Select Gender
+                </option>
+                <option className="text-black" value="male">
+                  Male
+                </option>
+                <option className="text-black" value="female">
+                  Female
+                </option>
+              </select>
+            </div>
           </div>
 
-
-          <div className="flex justify-center">
-            <input
-              type="number"
-              className="bg-transparent border border-gray-700 rounded-lg w-full p-2 hover:border-gray-700 focus:outline-none dark:focus:border-gray-500"
-              placeholder="Price"
-              name="price"
-              onChange={handleInputChange}
-              value={pet.price}
-            />
+          <div className="flex flex-col md:flex-row justify-center gap-2">
+            <div className="w-full">
+              <input
+                type="number"
+                className="bg-transparent border border-gray-700 rounded-lg w-full p-2 hover:border-gray-700 focus:outline-none dark:focus:border-gray-500"
+                placeholder="Price"
+                name="price"
+                onChange={handleInputChange}
+                value={pet.price}
+              />
+            </div>
+            <div className="w-full flex items-center justify-center">
+                  <input
+                    className="mr-2 scale-150"
+                    type="checkbox"
+                    name="productAvailable"
+                    id="pet-check"
+                    
+                    checked={pet.available}
+                    onChange={(e) =>{
+                      setPet({ ...pet, available: e.target.checked })
+                      console.log("Checkbox value: ", e.target.checked);
+                    }
+                    }
+                  />
+                  <label htmlFor="pet-check" className="pet-check">Product Available</label>
+            </div>
+           
           </div>
-          
+
           <div className="flex justify-center">
             <input
               type="text"
@@ -298,7 +311,6 @@ const PetsAdd = () => {
               value={pet.description}
             />
           </div>
-          
 
           <div className="flex justify-center items-center py-4">
             <button
