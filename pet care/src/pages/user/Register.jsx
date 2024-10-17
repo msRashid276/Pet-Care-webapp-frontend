@@ -1,8 +1,61 @@
-import React from "react";
+import React, { useState } from "react";
 import registerImage from '../../assets/user/register&login/registerImagePet.jpg'
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../../features/auth/AuthSlice";
+import { useNavigate } from "react-router-dom";
+
+
 
 const Register = () => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const {loading,error} = useSelector((state)=>state.auth)
+
+  
+  const [user,setUser] = useState({
+    firstName:"Rajan",
+    lastName:"r",
+    email:"rajan@gmail.com",
+    password:"r@123",
+    role:"CUSTOMER"
+  })
+
+  const handleChange = (e) =>{
+      const name = e.target.name;
+      const value = e.target.value;
+
+      setUser((prev)=>({
+          ...prev,
+          [name]:value
+      }))
+  }
+  
+  const handleSubmit = (e) =>{
+      e.preventDefault();
+
+      dispatch(registerUser(user)).then((result)=>{
+        if(result.payload){
+          // console.log(result.payload);
+          
+          setUser({
+            firstName: "",
+            lastName  : "",
+            email: "",
+            password: ""
+          });
+          navigate("/user/login")
+        }
+      }).catch((err)=>{
+        console.log(err,'error in register');
+        
+      })
+  }
+
+
+
   return (
+
     <div className="w-full flex py-10 space-x-12">
 
       <div className="basis-1/2 flex items-center ">
@@ -16,7 +69,9 @@ const Register = () => {
         <h1 className="text-3xl font-bold">Create an account</h1>
         <p className="pt-2 pb-8 text-sm font-thin">Enter your details below</p>
 
-        <form className="max-w-md">
+        {error && <p className="text-red-500">{error}</p>}
+         
+        <form className="max-w-md" onSubmit={handleSubmit} >
           <div className="grid md:grid-cols-2 md:gap-6">
             <div className="relative z-0 w-full mb-5 group">
               <input
@@ -25,9 +80,12 @@ const Register = () => {
                 aria-describedby="first_name_help"
                 className="block px-2.5 pb-2.5 pt-4 w-full text-sm border text-gray-900 bg-transparent rounded-lg border-1 focus:outline-none focus:ring-0 focus:border-gray-300 peer"
                 placeholder=" "
+                onChange={handleChange}
+                value={user.firstName}
+                name="firstName"
               />
               <label
-                for="first_name"
+                htmlFor="first_name"
                 className="absolute text-sm text-neutral-500  duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
               >
                 First Name
@@ -47,9 +105,12 @@ const Register = () => {
                 aria-describedby="last_name_help"
                 className="block px-2.5 pb-2.5 pt-4 w-full text-sm border text-gray-900 bg-transparent rounded-lg border-1 focus:outline-none focus:ring-0 focus:border-gray-300 peer"
                 placeholder=" "
+                onChange={handleChange}
+                value={user.lastName}
+                name="lastName"
               />
               <label
-                for="last_name"
+                htmlFor="last_name"
                 className="absolute text-sm text-neutral-500  duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
               >
                 Last Name
@@ -71,9 +132,12 @@ const Register = () => {
                 aria-describedby="email_help"
                 className="block px-2.5 pb-2.5 pt-4 w-full text-sm border text-gray-900 bg-transparent rounded-lg border-1 focus:outline-none focus:ring-0 focus:border-gray-300 peer"
                 placeholder=" "
+                onChange={handleChange}
+                value={user.email}
+                name="email"
               />
               <label
-                for="email"
+                htmlFor="email"
                 className="absolute text-sm text-neutral-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
               >
                 Email
@@ -90,42 +154,40 @@ const Register = () => {
           <div>
             <div className="relative z-0 w-full mb-5 group">
               <input
-                type="text"
+                type="password"
                 id="password"
                 aria-describedby="password_help"
                 className="block px-2.5 pb-2.5 pt-4 w-full text-sm border text-gray-900 bg-transparent rounded-lg border-1 focus:outline-none focus:ring-0 focus:border-gray-300 peer"
                 placeholder=" "
+                onChange={handleChange}
+                value={user.password}
+                name="password"
               />
               <label
-                for="password"
+                htmlFor="password"
                 className="absolute text-sm text-neutral-500  duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
               >
                 Password
               </label>
             </div>
-            {/* <p
-              id="outlined_success_help"
-              className="mt-2 text-xs text-green-600 dark:text-green-400"
-            >
-              <span className="font-medium">Well done!</span> Some success message.
-            </p> */}
           </div>
 
           <div className="flex items-center justify-center">
             <button
-              type="button"
-              class="text-white w-full bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-green-300  font-medium rounded-lg text-sm px-5 py-2.5 text-center my-4"
+              type="submit"
+              className="text-white w-full bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-green-300  font-medium rounded-lg text-sm px-5 py-2.5 text-center my-4"
             >
-              Create Account
+              {loading?'Loading....':'Create Account'}
             </button>
+            
           </div>
 
-          <div class="flex items-center justify-center w-full bg-white">
-            <button class="flex items-center justify-center w-full bg-white border border-gray-200 ou rounded-lg shadow-md px-6 py-2 text-sm font-medium text-gray-800  hover:bg-gray-200 focus:outline-none">
+          <div className="flex items-center justify-center w-full bg-white">
+            <button className="flex items-center justify-center w-full bg-white border border-gray-200 ou rounded-lg shadow-md px-6 py-2 text-sm font-medium text-gray-800  hover:bg-gray-200 focus:outline-none">
               <svg
-                class="h-6 w-6 mr-2"
+                className ="h-6 w-6 mr-2"
                 xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
+                xmlnsXlink="http://www.w3.org/1999/xlink"
                 width="800px"
                 height="800px"
                 viewBox="-0.5 0 48 48"
@@ -137,9 +199,9 @@ const Register = () => {
                 <g
                   id="Icons"
                   stroke="none"
-                  stroke-width="1"
+                  strokeWidth="1"
                   fill="none"
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                 >
                   {" "}
                   <g
@@ -191,6 +253,7 @@ const Register = () => {
           <p className="py-7 text-center font-thin text-sm ">Already have account?  <span className="hover:underline text-md font-semibold">Log in</span></p>
 
         </form>
+       
       </div>
     </div>
   );

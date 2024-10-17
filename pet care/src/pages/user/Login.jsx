@@ -2,6 +2,7 @@ import React from 'react'
 import registerImage from '../../assets/user/register&login/registerImagePet.jpg'
 
 const Login = () => {
+  
   return (
     <div className="w-full flex py-10 space-x-12">
 
@@ -68,16 +69,16 @@ const Login = () => {
           <div className="flex items-center justify-center">
             <button
               type="button"
-              class="text-white w-full bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-green-300  font-medium rounded-lg text-sm px-5 py-2.5 text-center my-4"
+              className="text-white w-full bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-green-300  font-medium rounded-lg text-sm px-5 py-2.5 text-center my-4"
             >
               Log In
             </button>
           </div>
 
-          <div class="flex items-center justify-center w-full bg-white">
-            <button class="flex items-center justify-center w-full bg-white border border-gray-200 ou rounded-lg shadow-md px-6 py-2 text-sm font-medium text-gray-800  hover:bg-gray-200 focus:outline-none">
+          <div className="flex items-center justify-center w-full bg-white">
+            <button className="flex items-center justify-center w-full bg-white border border-gray-200 ou rounded-lg shadow-md px-6 py-2 text-sm font-medium text-gray-800  hover:bg-gray-200 focus:outline-none">
               <svg
-                class="h-6 w-6 mr-2"
+                className="h-6 w-6 mr-2"
                 xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
                 width="800px"
@@ -91,9 +92,10 @@ const Login = () => {
                 <g
                   id="Icons"
                   stroke="none"
-                  stroke-width="1"
+                  strokeWidth="1"
                   fill="none"
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
+                  
                 >
                   {" "}
                   <g

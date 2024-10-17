@@ -38,7 +38,7 @@ const Carousel = () => {
       runningTimeRef.current.style.animation = 'none';
       runningTimeRef.current.offsetHeight; // Trigger reflow
       runningTimeRef.current.style.animation = null;
-      runningTimeRef.current.style.animation = 'runningTime 7s linear 1 forwards';
+      runningTimeRef.current.style.animation = 'runningTime 3s linear 1 forwards';
     }
   };
 
