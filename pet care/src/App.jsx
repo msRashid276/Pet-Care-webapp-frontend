@@ -21,22 +21,23 @@ import SpeciesAdd from "./pages/shop/SpeciesAdd";
 import PetsAdd from "./pages/shop/PetsAdd";
 import Home from "./pages/user/Home";
 
+
 function App() {
   return (
     <AuthProvider>
       <Router>
         <Routes>
-          {/* <Route path='/auth/login' element={<Login/>}/> */}
+          <Route path='/auth/login' element={<Login/>}/>
 
-          {/* <Route element={<PrivateRoutes allowedRoles={['ADMIN']}/>}>
+          <Route element={<PrivateRoutes allowedRoles={['ADMIN']}/>}>
                 <Route path='/admin' element={<LayoutAdmin/>}>
                   <Route index element={<DashboardAdmin/>}/>
                   <Route path='users' element={<UsersAdmin/>}/>
                   <Route path='addUser' element={<AddUser/>}/>
                 </Route>
-              </Route> */}
+              </Route>
 
-          {/* <Route path='/shop/register' element={<ShopRegister/>}/>
+          <Route path='/shop/register' element={<ShopRegister/>}/>
               <Route path='/shop/addShop' element={<RegisterShop/>}/>
               <Route path='/shop' element={<LayoutShop/>}>
                   <Route path='dashboard' element={<DashboardShop/>}/>
@@ -44,13 +45,16 @@ function App() {
                   <Route path='add-species' element={<SpeciesAdd/>}/>
                   <Route path='add-pets' element={<PetsAdd/>}/>
                  
-              </Route> */}
+              </Route>
 
-            <Route path="/user" element={<LayoutUser />}>
-              <Route path="register" element={<RegisterUser />} />
-              {/* <Route path="login" element={<LoginUser />} /> */}
-              {/* <Route path="home" element={<Home />} /> */}
-            </Route>
+          <Route path="/user" element={<LayoutUser />}>
+            <Route path="register" element={<RegisterUser />} />
+            <Route path="login" element={<LoginUser />} />
+            <Route path="home" element={<Home />} />
+          </Route>
+
+         
+
         </Routes>
       </Router>
     </AuthProvider>

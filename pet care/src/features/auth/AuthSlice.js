@@ -4,23 +4,23 @@ import { loginUserApi, registerUserApi } from "./AuthApi";
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
   async (data) => {
-    try {
-      
+    try {     
       const response = await registerUserApi(data);
       return response;
     } catch (error) {
-      // return thunkAPI.rejectWithValue(error.response.data);
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
 
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
-  async (data, thunkAPI) => {
+  async (data,thunkAPI ) => {
     try {
       const response = await loginUserApi(data);
-      return response;
-      console.log(response);
+      console.log(response.data,"response in slice login");
+      return response.data;
+      
       
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -42,6 +42,8 @@ const authSlice = createSlice({
     logout: (state) => {
       state.user = null;
       state.isAuthenticated = false;
+      localStorage.removeItem("token");
+      state.token=null;
     },
   },
   extraReducers: (builder)=>{
@@ -52,9 +54,16 @@ const authSlice = createSlice({
       state.error = null;
     })
     .addCase(loginUser.fulfilled, (state, action) => {
-      state.user = action.payload;
+      console.log(action.payload.token,"token");
+      console.log(action.payload.user,"action");
+        
+      state.user = action.payload.user;
+      state.token = action.payload.token
       state.isAuthenticated = true;
       state.loading = false;
+
+      localStorage.setItem("token",JSON.stringify(action.payload.token))
+
     })
     .addCase(loginUser.rejected, (state, action) => {
       state.error = action.payload;
@@ -79,5 +88,5 @@ const authSlice = createSlice({
   },
 });
 
-// export const { logout } = authSlice.actions;
+export const { logout } = authSlice.actions;
 export default authSlice.reducer;

@@ -1,8 +1,54 @@
-import React from 'react'
+import React, { useState } from 'react'
 import registerImage from '../../assets/user/register&login/registerImagePet.jpg'
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { loginUser } from '../../features/auth/AuthSlice';
+import { toast } from 'react-toastify';
+
 
 const Login = () => {
   
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const {loading,error} = useSelector((state)=>state.auth)
+
+  
+  const [user,setUser] = useState({
+    email:"sachin@gmail.com",
+    password:"s@123",
+  })
+
+  const handleChange = (e) =>{
+      const name = e.target.name;
+      const value = e.target.value;
+
+      setUser((prev)=>({
+          ...prev,
+          [name]:value
+      }))
+  }
+  
+  const handleSubmit = (e) =>{
+      e.preventDefault();
+
+      dispatch(loginUser(user)).then((result)=>{
+        if(result.payload){ 
+          setUser({
+            email: "",
+            password: ""
+          });
+          toast("Successfully Logined")
+          navigate("/user/home")
+        }
+      }).catch((err)=>{
+        console.log(err,'error in login');
+        
+      })
+  }
+
+
+
+
   return (
     <div className="w-full flex py-10 space-x-12">
 
@@ -17,7 +63,9 @@ const Login = () => {
         <h1 className="text-3xl font-bold">Log in to PetCare</h1>
         <p className="pt-2 pb-8 text-sm font-thin">Enter your details below</p>
 
-        <form className="max-w-md">
+        {error && <p className="text-red-500">{error}</p>}
+
+        <form className="max-w-md" onSubmit={handleSubmit}>
           <div>
             <div className="relative z-0 w-full mb-5 group">
               <input
@@ -26,6 +74,9 @@ const Login = () => {
                 aria-describedby="first_name_help"
                 className="block px-2.5 pb-2.5 pt-4 w-full text-sm border text-gray-900 bg-transparent rounded-lg border-1 focus:outline-none focus:ring-0 focus:border-gray-300 peer"
                 placeholder=" "
+                name='email'
+                value={user.email}
+                onChange={handleChange}
               />
               <label
                 for="first_name"
@@ -45,11 +96,13 @@ const Login = () => {
           <div>
             <div className="relative z-0 w-full mb-5 group">
               <input
-                type="text"
+                type="password"
                 id="password"
                 aria-describedby="password_help"
                 className="block px-2.5 pb-2.5 pt-4 w-full text-sm border text-gray-900 bg-transparent rounded-lg border-1 focus:outline-none focus:ring-0 focus:border-gray-300 peer"
                 placeholder=" "
+                value={user.password}
+                onChange={handleChange}
               />
               <label
                 for="password"
@@ -68,10 +121,10 @@ const Login = () => {
 
           <div className="flex items-center justify-center">
             <button
-              type="button"
+              type="submit"
               className="text-white w-full bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-green-300  font-medium rounded-lg text-sm px-5 py-2.5 text-center my-4"
             >
-              Log In
+               {loading?'Loading....':'Log In'}
             </button>
           </div>
 
@@ -144,7 +197,7 @@ const Login = () => {
             </button>
           </div>
 
-          <p className="py-7 text-center font-thin text-sm ">Don't have an account?  <span className="hover:underline text-md font-semibold">Sign Up</span></p>
+          <p className="py-7 text-center font-thin text-sm ">Don't have an account?  <span className="hover:underline text-md font-semibold"><Link to="/user/register">Sign Up</Link></span></p>
 
         </form>
       </div>

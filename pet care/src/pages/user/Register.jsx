@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import registerImage from '../../assets/user/register&login/registerImagePet.jpg'
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../features/auth/AuthSlice";
-import { useNavigate } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import {toast} from 'react-toastify'
 
 
 const Register = () => {
@@ -14,9 +14,9 @@ const Register = () => {
 
   
   const [user,setUser] = useState({
-    firstName:"Rajan",
+    firstName:"Raman",
     lastName:"r",
-    email:"rajan@gmail.com",
+    email:"raman@gmail.com",
     password:"r@123",
     role:"CUSTOMER"
   })
@@ -44,6 +44,7 @@ const Register = () => {
             email: "",
             password: ""
           });
+          toast("Successfully Registered")
           navigate("/user/login")
         }
       }).catch((err)=>{
@@ -250,7 +251,7 @@ const Register = () => {
             </button>
           </div>
 
-          <p className="py-7 text-center font-thin text-sm ">Already have account?  <span className="hover:underline text-md font-semibold">Log in</span></p>
+          <p className="py-7 text-center font-thin text-sm ">Already have account?  <span className="hover:underline text-md font-semibold"><Link to="/user/login" >Log in</Link></span></p>
 
         </form>
        

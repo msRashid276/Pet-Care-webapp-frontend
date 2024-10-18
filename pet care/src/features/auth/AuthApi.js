@@ -12,7 +12,7 @@ export const registerUserApi = async(data) =>{
                 },
         });
 
-        return response.data;
+        return response;
 
     }catch(error){
         console.error("Registration Error:", error.response ? error.response.data : error.message);
@@ -22,17 +22,18 @@ export const registerUserApi = async(data) =>{
 
 
 
-export const loginUserApi = () =>{
+export const loginUserApi = async(data) =>{
     try{
-        const response = axios.post(`${apiUrl}/auth/authenticate`,data,{
+        const response = await axios.post(`${apiUrl}/auth/authenticate`,data,{
                 headers:{
                     'Content-Type': 'application/json',
                 },
         })
 
-        return response.data;
+        return response;
 
     }catch(error){
+        console.error("Registration Error:", error.response ? error.response.data : error.message);
         throw error;
     }
 }
