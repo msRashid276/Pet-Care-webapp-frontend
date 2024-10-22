@@ -20,6 +20,7 @@ import LayoutUser from "./components/user/shared/Layout";
 import SpeciesAdd from "./pages/shop/SpeciesAdd";
 import PetsAdd from "./pages/shop/PetsAdd";
 import Home from "./pages/user/Home";
+import ShopPetDetails from "./pages/user/ShopPetDetails";
 
 
 function App() {
@@ -38,19 +39,20 @@ function App() {
               </Route>
 
           <Route path='/shop/register' element={<ShopRegister/>}/>
-              <Route path='/shop/addShop' element={<RegisterShop/>}/>
+          <Route path='/shop/addShop' element={<RegisterShop/>}/>
               <Route path='/shop' element={<LayoutShop/>}>
                   <Route path='dashboard' element={<DashboardShop/>}/>
                   <Route path='details' element={<ShopDetails/>}/>
                   <Route path='add-species' element={<SpeciesAdd/>}/>
                   <Route path='add-pets' element={<PetsAdd/>}/>
-                 
               </Route>
+
 
           <Route path="/user" element={<LayoutUser />}>
             <Route path="register" element={<RegisterUser />} />
             <Route path="login" element={<LoginUser />} />
             <Route path="home" element={<Home />} />
+            <Route path="shop-petdetails" element={<ShopPetDetails/>}/>
           </Route>
 
          

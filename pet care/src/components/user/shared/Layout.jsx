@@ -8,10 +8,10 @@ import 'react-toastify/dist/ReactToastify.css';
 const Layout = () => {
   return (
     <div className="flex flex-col bg-white h-screen w-screen">
-      
+
         <Header />
      
-      <div className="flex-1 mt-[100px]"> 
+      <div className="flex-1 mt-[100px] "> 
         <Outlet />
       </div>
         <Footer />

@@ -9,8 +9,8 @@ const Login = () => {
   const { setAuth } = useContext(AuthContext);
 
   const [input, setInput] = useState({
-    email: "abeesh@gmail.com",
-    password: "a@123",
+    email: "",
+    password: "",
   });
 
   //fetching data from input

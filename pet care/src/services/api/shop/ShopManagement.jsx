@@ -74,7 +74,9 @@ export const checkSpeciesIfExist = async(token) =>{
                 'Content-Type': 'application/json',
             }
         });
+        console.log(response,"response of species");
         return response;
+        
     }catch(error){
         console.error('Error in Fetching species of user:', error);
     }

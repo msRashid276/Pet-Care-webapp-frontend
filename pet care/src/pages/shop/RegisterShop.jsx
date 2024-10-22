@@ -17,19 +17,19 @@ const RegisterShop = () => {
   const navigate = useNavigate();
 
   const [shop, setShop] = useState({
-    name: "Roms N Raks",
-    description: "best petshop",
+    name: "",
+    description: "",
     address: {
-      street: "Palarivattom",
-      city: "Ernakulam",
-      state: "Kerala",
-      zipCode: "682019",
+      street: "",
+      city: "",
+      state: "",
+      zipCode: "",
     },
     contactInformation: {
-      email: "roms@gmail.com",
-      mobile: "12345",
-      twitter: "roms@twitter",
-      instagram: "roms@instagram",
+      email: "",
+      mobile: "",
+      twitter: "",
+      instagram: "",
     },
     openingHours: "Mon-Sat: 9:00 AM - 7:00 PM",
     images: [],
