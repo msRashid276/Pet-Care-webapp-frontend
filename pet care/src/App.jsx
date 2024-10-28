@@ -52,7 +52,7 @@ function App() {
             <Route path="register" element={<RegisterUser />} />
             <Route path="login" element={<LoginUser />} />
             <Route path="home" element={<Home />} />
-            <Route path="shop-petdetails" element={<ShopPetDetails/>}/>
+            <Route path="shop-petdetails/:id" element={<ShopPetDetails/>}/>
           </Route>
 
          

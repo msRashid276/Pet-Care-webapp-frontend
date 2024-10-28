@@ -68,15 +68,15 @@ const PetsAdd = () => {
   };
 
   const [pet, setPet] = useState({
-    name: "Buddy",
+    name: "",
     speciesId: "",
-    breed: "Golden Retriever",
-    age: 3,
-    gender: "Male",
-    price: 1200,
+    breed: "",
+    age: "",
+    gender: "",
+    price: "",
     images: [],
     description:
-      "A friendly and playful golden retriever, great with families and children.",
+      "",
     petShopId: "",
     available: false
   });

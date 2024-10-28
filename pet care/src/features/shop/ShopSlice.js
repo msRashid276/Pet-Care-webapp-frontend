@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { fetchAllPetShops } from "./ShopApi";
+import { fetchAllPetShops, fetchPetShopById} from "./ShopApi";
 
 export const fetchPetShops = createAsyncThunk(
     "petShop/fetchPetShop",
@@ -21,8 +21,31 @@ export const fetchPetShops = createAsyncThunk(
   );
 
 
+  export const petShopById = createAsyncThunk(
+    "petShop/petShopById",
+    async (shopId,thunkAPI ) => {
+      const stringToken = localStorage.getItem("token");
+      const token = JSON.parse(stringToken)
+      console.log(token,"token from localstorage");
+
+      try {
+        const response = await fetchPetShopById(token,shopId);
+        console.log(response.data,"response in petshopId fetch");
+        return response.data;
+        
+        
+      } catch (error) {
+        return thunkAPI.rejectWithValue(error.response.data);
+      }
+    }
+  );
+
+
+
+
 const initialState = {
-    petShop: null,
+    petShop: [],
+    selectedPetShop:null,
     loading: false,
     error: null,
     token: localStorage.getItem("token") || null
@@ -50,6 +73,19 @@ const PetShopSlice = createSlice({
         state.error = action.payload;
         state.loading = false;
       }) 
+      
+      .addCase(petShopId.pending,(state)=>{
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(petShopId.fulfilled,(state,action)=>{
+        state.selectedPetShop = action.payload;
+        state.loading = false;
+      })
+      .addCase(petShopId.rejected,(state,action)=>{
+        state.selectedPetShop = action.payload;
+        state.loading = false;
+      })
   
     },
   });
