@@ -22,6 +22,7 @@ import PetsAdd from "./pages/shop/PetsAdd";
 import Home from "./pages/user/Home";
 import ShopPetDetails from "./pages/user/ShopPetDetails";
 import PageNotFound from "./pages/user/PageNotFound";
+import Contact from "./pages/user/Contact";
 
 
 function App() {
@@ -54,6 +55,7 @@ function App() {
             <Route path="login" element={<LoginUser />} />
             <Route path="home" element={<Home />} />
             <Route path="shop-petdetails/:id" element={<ShopPetDetails/>}/>
+            <Route path="contact" element={<Contact/>}/>
             <Route path="*" element={<PageNotFound />} />
           </Route>
 

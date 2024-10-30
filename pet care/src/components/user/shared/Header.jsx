@@ -75,12 +75,12 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                to="/user/contact"
                 className="block py-2 px-3 text-gray-800 hover:text-gray-900 rounded md:p-0"
               >
                 Contact
-              </a>
+              </Link>
             </li>
             <li>
               <a
