@@ -10,7 +10,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   const { petShop } = useSelector((state) => state.petShop);
-  console.log(petShop, "token iam here in home page");
+  // console.log(petShop, "token iam here in home page");
 
   useEffect(() => {
     dispatch(fetchPetShops());
@@ -21,17 +21,17 @@ const Home = () => {
   }
 
   return (
-    <div>
+    <div className="bg-white">
       {/* <Carousel/> */}
 
 
       {/* Pet Shop  */}
-      <div className="bg-white w-full pt-5">
+      <div className="w-full pt-5">
         <div className="max-w-screen-xl flex flex-row flex-wrap mx-auto p-4 max-sm:justify-center">
           <div className="space-y-4">
             <div className="flex">
               <div className="h-5 w-3 rounded-sm bg-red-600 mr-3"></div>
-              <p className="text-red-600 text-sm font-semibold">Our Pets</p>
+              <p className="text-red-600 text-sm font-semibold">Our PetShops</p>
             </div>
             <h1 className="text-2xl font-semibold pb-6">Explore Our Pet Shops</h1>
           </div>

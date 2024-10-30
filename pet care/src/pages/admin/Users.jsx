@@ -60,7 +60,7 @@ const Users = () => {
         updatedUser,
         updatedUser.id
       );
-      console.log("responseDelete", response.data);
+      console.log("response update", response.data);
       setUsers(
         users.map((user) => (user.id === updatedUser.id ? updatedUser : user))
       );
@@ -131,7 +131,8 @@ const Users = () => {
           />
         ))}
       </div>
-      {isModalOpen && selectedUser && (
+      {
+      isModalOpen && selectedUser && (
         <UpdateUserModal
           user={selectedUser}
           onSave={handleSave}

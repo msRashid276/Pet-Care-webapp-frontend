@@ -1,3 +1,6 @@
+import axios from "axios";
+import { apiUrl } from "../../Config";
+
 export const fetchPetsFromPetShopId = async(shopId,token) =>{
 
     try{

@@ -29,7 +29,7 @@ export const fetchPetShopById = async(token,shopId) =>{
                     'Authorization': `Bearer ${token}`,
                 },
         })
-        console.log(response,"response")
+        // console.log(response,"response")
         return response;
 
     }catch(error){

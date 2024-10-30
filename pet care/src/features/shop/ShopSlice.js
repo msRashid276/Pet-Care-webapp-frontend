@@ -6,11 +6,11 @@ export const fetchPetShops = createAsyncThunk(
     async (_,thunkAPI ) => {
       const stringToken = localStorage.getItem("token");
       const token = JSON.parse(stringToken)
-      console.log(token,"token from localstorage");
+      // console.log(token,"token from localstorage");
 
       try {
         const response = await fetchAllPetShops(token);
-        console.log(response.data,"response in petshop fetch");
+        // console.log(response.data,"response in petshop fetch");
         return response.data;
         
         
@@ -26,11 +26,11 @@ export const fetchPetShops = createAsyncThunk(
     async (shopId,thunkAPI ) => {
       const stringToken = localStorage.getItem("token");
       const token = JSON.parse(stringToken)
-      console.log(token,"token from localstorage");
+      // console.log(token,"token from localstorage");
 
       try {
         const response = await fetchPetShopById(token,shopId);
-        console.log(response.data,"response in petshopId fetch");
+        // console.log(response.data,"response in petshopId fetch");
         return response.data;
         
         
@@ -63,8 +63,8 @@ const PetShopSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchPetShops.fulfilled, (state, action) => {
-        console.log(state,"state");
-        console.log(action,"action");
+        // console.log(state,"state");
+        // console.log(action,"action");
           
         state.petShop = action.payload;
         state.loading = false;
@@ -74,15 +74,15 @@ const PetShopSlice = createSlice({
         state.loading = false;
       }) 
       
-      .addCase(petShopId.pending,(state)=>{
+      .addCase(petShopById.pending,(state)=>{
         state.loading = true;
         state.error = null;
       })
-      .addCase(petShopId.fulfilled,(state,action)=>{
+      .addCase(petShopById.fulfilled,(state,action)=>{
         state.selectedPetShop = action.payload;
         state.loading = false;
       })
-      .addCase(petShopId.rejected,(state,action)=>{
+      .addCase(petShopById.rejected,(state,action)=>{
         state.selectedPetShop = action.payload;
         state.loading = false;
       })
