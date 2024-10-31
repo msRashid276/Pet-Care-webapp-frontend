@@ -11,7 +11,7 @@ export const petsFromShopId = createAsyncThunk("pets/petsFromShopId",async(shopI
         return response.data;     
     }
     catch(error){
-        return thunkAPI.rejectWithValue(error.response.data);
+        return thunkAPI.rejectWithValue(error.response.data); 
     }
 })
 

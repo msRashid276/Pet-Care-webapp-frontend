@@ -14,10 +14,10 @@ const Register = () => {
 
   
   const [user,setUser] = useState({
-    firstName:"Raman",
-    lastName:"r",
-    email:"raman@gmail.com",
-    password:"r@123",
+    firstName:"",
+    lastName:"",
+    email:"",
+    password:"",
     role:"CUSTOMER"
   })
 

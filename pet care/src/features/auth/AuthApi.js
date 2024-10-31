@@ -4,6 +4,9 @@ import { apiUrl } from "../../Config"
 
 
 export const registerUserApi = async(data) =>{
+
+    
+    
     try{
 
         const response = await axios.post(`${apiUrl}/auth/register`,data,{
@@ -23,6 +26,7 @@ export const registerUserApi = async(data) =>{
 
 
 export const loginUserApi = async(data) =>{
+    console.log(apiUrl,"apiurl");
     try{
         const response = await axios.post(`${apiUrl}/auth/authenticate`,data,{
                 headers:{

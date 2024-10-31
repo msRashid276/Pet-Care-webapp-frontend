@@ -1,7 +1,14 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../../features/cart/CartSlice";
 
 const PetCard = ({ pet }) => {
-  console.log(pet, "pet list");
+  
+  const dispatch = useDispatch();
+
+  const handleAddToCart = (pet) =>{
+      dispatch(addToCart(pet))
+  }
 
   return (
     <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow">
@@ -74,15 +81,15 @@ const PetCard = ({ pet }) => {
           </span>
         </div> */}
         <div className="flex items-center justify-between py-3">
-          <span className="text-xl font-md text-gray-900 ">
+          <span className="text-md font-md text-gray-900 ">
                ${pet.price}
           </span>
-          <div
-
+          <button
+              onClick={()=>handleAddToCart(pet)}
             className="text-white cursor-pointer bg-blue-900 hover:bg-blue-950 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
           >
             Add to cart
-          </div>
+          </button>
         </div>
       </div>
     </div>
