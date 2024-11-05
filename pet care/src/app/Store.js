@@ -3,7 +3,7 @@
   import authReducer from '../features/auth/AuthSlice';
   import petShopReducer from '../features/shop/ShopSlice'
   import petReducer from '../features/pet/PetSlice'
-  import cartReducer from '../features/pet/PetSlice'
+  import cartReducer from '../features/cart/CartSlice';
 
   const store = configureStore({
     reducer: {

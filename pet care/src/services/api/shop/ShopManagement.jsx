@@ -21,7 +21,6 @@ export const registerShop = async(formData,token) =>{
     
     
     try{
-            console.log(formData,"sssssssssssss");
             
         const response = await axios.post(`${apiUrl}/api/shop-owner/pet-shop`, formData ,{
             headers: {
