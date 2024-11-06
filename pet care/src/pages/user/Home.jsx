@@ -25,7 +25,7 @@ const Home = () => {
     <div className="bg-white">
 
       <section>
-        {/* <Carousel/> */}
+        <Carousel/>
       </section>
 
       <section>

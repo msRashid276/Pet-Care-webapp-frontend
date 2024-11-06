@@ -7,11 +7,11 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Layout = () => {
   return (
-    <div className="flex flex-col bg-white h-screen w-screen">
+    <div className="flex flex-col bg-white h-screen w-full">
 
         <Header />
      
-      <div className="flex-1 mt-[100px] "> 
+      <div className="flex-1 mt-[80px]"> 
         <Outlet />
       </div>
         <Footer />
