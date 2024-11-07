@@ -2,13 +2,20 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { GoChevronRight } from "react-icons/go";
 import "./cart.css";
+import { useSelector } from "react-redux";
+import { FaMinus, FaPlus } from "react-icons/fa";
 
 const Cart = () => {
+
+  const { cartItems } = useSelector((state) => state.cart);
+  console.log(cartItems,"cart");
+ 
+  
   return (
     <div className="w-full bg-white overflow-x-hidden">
       {/* Breadcrumb Section Begin */}
       <div className="w-full h-40" style={{ background: "#f3f2ee" }}>
-        <div className="max-w-screen-xl mx-auto h-full flex flex-col items-start justify-center space-y-3">
+        <div className="max-w-screen-lg mx-auto h-full flex flex-col items-start justify-center space-y-3">
           <h1 className="text-3xl font-semibold">Pet Cart</h1>
           <div className="flex space-x-2 text-md items-center ">
             <Link
@@ -42,100 +49,46 @@ const Cart = () => {
                   <thead>
                     <tr>
                       <th>Product</th>
+                      <th>Price</th>
                       <th>Quantity</th>
                       <th>Total</th>
                       <th></th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="product__cart__item">
-                        <div className="product__cart__item__pic">
-                          <img src="img/shopping-cart/cart-1.jpg" alt="" />
-                        </div>
-                        <div className="product__cart__item__text">
-                          <h6>T-shirt Contrast Pocket</h6>
-                          <h5>$98.49</h5>
-                        </div>
-                      </td>
-                      <td className="quantity__item">
-                        <div className="quantity">
-                          <div className="pro-qty-2">
-                            <input type="text" value="1" />
-                          </div>
-                        </div>
-                      </td>
-                      <td className="cart__price">$ 30.00</td>
-                      <td className="cart__close">
-                        <i className="fa fa-close"></i>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="product__cart__item">
-                        <div className="product__cart__item__pic">
-                          <img src="img/shopping-cart/cart-2.jpg" alt="" />
-                        </div>
-                        <div className="product__cart__item__text">
-                          <h6>Diagonal Textured Cap</h6>
-                          <h5>$98.49</h5>
-                        </div>
-                      </td>
-                      <td className="quantity__item">
-                        <div className="quantity">
-                          <div className="pro-qty-2">
-                            <input type="text" value="1" />
-                          </div>
-                        </div>
-                      </td>
-                      <td className="cart__price">$ 32.50</td>
-                      <td className="cart__close">
-                        <i className="fa fa-close"></i>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="product__cart__item">
-                        <div className="product__cart__item__pic">
-                          <img src="img/shopping-cart/cart-3.jpg" alt="" />
-                        </div>
-                        <div className="product__cart__item__text">
-                          <h6>Basic Flowing Scarf</h6>
-                          <h5>$98.49</h5>
-                        </div>
-                      </td>
-                      <td className="quantity__item">
-                        <div className="quantity">
-                          <div className="pro-qty-2">
-                            <input type="text" value="1" />
-                          </div>
-                        </div>
-                      </td>
-                      <td className="cart__price">$ 47.00</td>
-                      <td className="cart__close">
-                        <i className="fa fa-close"></i>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="product__cart__item">
-                        <div className="product__cart__item__pic">
-                          <img src="img/shopping-cart/cart-4.jpg" alt="" />
-                        </div>
-                        <div className="product__cart__item__text">
-                          <h6>Basic Flowing Scarf</h6>
-                          <h5>$98.49</h5>
-                        </div>
-                      </td>
-                      <td className="quantity__item">
-                        <div className="quantity">
-                          <div className="pro-qty-2">
-                            <input type="text" value="1" />
-                          </div>
-                        </div>
-                      </td>
-                      <td className="cart__price">$ 30.00</td>
-                      <td className="cart__close">
-                        <i className="fa fa-close"></i>
-                      </td>
-                    </tr>
+                    {cartItems.map((item) => (
+                       <tr key={item.id} >
+                          <td className="flex w-[175px]">
+                            <div className="flex flex-col justify-center items-center font-bold">
+                              <img src={item.images[0]} alt={item.name} className="h-30 w-30 rounded-lg" />
+                              <p>{item.breed}</p>
+                            </div>
+                          </td>
+                          <td className="quantity__item">
+                            <div className="quantity">
+                              <div className="pro-qty-2">
+                                <input type="text" value={`$${item.price}`} readOnly />
+                              </div>
+                            </div>
+                          </td>
+                          <td >
+                            <div className="border border-neutral-200 p-2">
+                              <div className="flex space-x-5">
+                                <button><FaMinus className=""/></button>
+                                <div className="text-xl font-semibold">{item.cartQuantity}</div>
+                                <button ><FaPlus /> </button>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="cart__price">
+                            ${item.price * item.cartQuantity}
+                          </td>
+                          <td className="cart__close">
+                            <i className="fa fa-close"></i>
+                          </td>
+                     </tr>
+                    ))}
+                    
                   </tbody>
                 </table>
               </div>
@@ -148,7 +101,7 @@ const Cart = () => {
                 <div className="">
                   <div className="continue__btn update__btn">
                     <a href="#">
-                      <i className="fa fa-spinner"></i> Update cart
+                      <i className="fa fa-spinner"></i> Clear0 cart
                     </a>
                   </div>
                 </div>
@@ -166,10 +119,10 @@ const Cart = () => {
                 <h6>Cart total</h6>
                 <ul>
                   <li>
-                    Subtotal <span>$ 169.50</span>
+                    Subtotal <span>${cartItems.reduce((total,item) => total + item.price * item.cartQuantity,0)}</span>
                   </li>
                   <li>
-                    Total <span>$ 169.50</span>
+                    Total <span>${cartItems.reduce((total,item) => total + item.price * item.cartQuantity,0)}</span>
                   </li>
                 </ul>
                 <a href="#" className="primary-btn">

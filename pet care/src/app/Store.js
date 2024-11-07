@@ -5,13 +5,15 @@
   import petReducer from '../features/pet/PetSlice'
   import cartReducer from '../features/cart/CartSlice';
 
+
   const store = configureStore({
     reducer: {
       auth: authReducer, // Ensure this matches the structure in your auth slice
       petShop: petShopReducer,
       pets: petReducer,
-      cart: cartReducer
+      cart: cartReducer   
     },
+   
   });
 
   export default store; // Default export

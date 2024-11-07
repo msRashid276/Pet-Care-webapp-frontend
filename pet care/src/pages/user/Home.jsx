@@ -11,6 +11,8 @@ const Home = () => {
   const navigate = useNavigate();
 
   const { petShop } = useSelector((state) => state.petShop);
+  
+  
   // console.log(petShop, "token iam here in home page");
 
   useEffect(() => {
@@ -22,7 +24,7 @@ const Home = () => {
   };
 
   return (
-    <div className="bg-white">
+    <div className="bg-white w-full">
 
       <section>
         <Carousel/>

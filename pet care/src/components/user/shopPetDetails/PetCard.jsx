@@ -1,13 +1,16 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../features/cart/CartSlice";
+import { useNavigate } from "react-router-dom";
 
 const PetCard = ({ pet }) => {
   
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleAddToCart = (pet) =>{
       dispatch(addToCart(pet))
+      navigate("/user/cart")
   }
 
   return (

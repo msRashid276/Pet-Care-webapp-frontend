@@ -69,7 +69,7 @@ const Carousel = () => {
   };
 
   return (
-    <div className='carousel h-screen w-screen relative overflow-hidden' ref={carouselRef}>
+    <div className='carousel h-screen w-full relative overflow-hidden' ref={carouselRef}>
       <div className='list' ref={listRef}>
         <div className='item' style={{ backgroundImage: `url(${pet1})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
           <div className="content">
