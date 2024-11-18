@@ -45,6 +45,9 @@ function App() {
                 </Route>
               </Route>
 
+
+          {/* Shop */}
+
           <Route path='/shop/register' element={<ShopRegister/>}/>
           <Route path='/shop/addShop' element={<RegisterShop/>}/>
               <Route path='/shop' element={<LayoutShop/>}>
@@ -54,6 +57,8 @@ function App() {
                   <Route path='add-pets' element={<PetsAdd/>}/>
               </Route>
 
+
+          {/* User */}
 
           <Route path="/user" element={<LayoutUser />}>
             <Route path="register" element={<RegisterUser />} />
