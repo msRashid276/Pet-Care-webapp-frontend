@@ -37,6 +37,8 @@ function App() {
 
           <Route path='/auth/login' element={<Login/>}/>
 
+
+          {/* Admin */}
           <Route element={<PrivateRoutes allowedRoles={['ADMIN']}/>}>
                 <Route path='/admin' element={<LayoutAdmin/>}>
                   <Route index element={<DashboardAdmin/>}/>
